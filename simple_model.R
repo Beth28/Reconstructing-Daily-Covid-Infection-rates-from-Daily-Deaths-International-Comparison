@@ -1,5 +1,6 @@
-source('Functions_for_simple.R')
 source('Data_code.R')
+source('Functions_for_simple.R')
+source('functions_for_complex.R')
 
 ## England
 
@@ -10,12 +11,6 @@ lock_eng <- c(julian(as.Date("2020-3-24"),origin=as.Date("2019-12-31")),
 dat_eng <- simple_model_dat(ed_ENG, "2020-03-02", 1) # returns data in required format for plotting
 b_eng <- simple_model_b(ed_ENG, "2020-03-02", 1) # fits simple model
 
-par(mar=c(5,5,1,1),mfrow=c(1,1))
-plot(b_eng,rug=FALSE,scheme=1,n=500,ylim=c(0,175),ylab="Daily infections/Deaths",
-     xlab="Days since 31 Dec 2019",select=1,cex.lab=1.2);
-abline(v=lock_eng);abline(0,0,lty=2)
-with(dat_eng,points(tag,tote,pch=19,col=1,cex=.5))
-lines(dat_eng$tag,fitted(b_scot),col="grey",lwd=2)
 
 
 ## Scotland
@@ -111,7 +106,7 @@ plot(b_eng,rug=FALSE,scheme=1,n=500,ylim=c(0,1800),ylab="England Daily infection
 abline(v=lock_eng);abline(0,0,lty=2)
 with(dat_eng,points(tag,tote,pch=19,col=1,cex=.5))
 lines(dat_eng$tag,fitted(b_eng),col="grey",lwd=2)
-month.axis(start=31,stop=,origin = 0, cex=0.8)
+month.axis(start=31,stop=420,origin = 0, cex=0.8)
 
 
 ## Belgium, Italy and Spain

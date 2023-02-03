@@ -7,6 +7,8 @@ Code for 4th year undergraduate report titled: Reconstructing Daily Covid Infect
 
 * functions_for_complex contains the functions for fitting and plotting the complex model, and is sourced by complex_model.R
 
+* simple_model.R contains ... takes less than 30 mins to run in its entirity
+
 * Data contains all the data used in the code
 
 * Figures contains all figures produced by the code
