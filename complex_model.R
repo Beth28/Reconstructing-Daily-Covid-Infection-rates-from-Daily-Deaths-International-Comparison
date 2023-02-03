@@ -1,9 +1,10 @@
+source('Data_code.R')
 source('functions_for_complex.R')
 
 choose.data <- function(k) {
   ## somewhat sloppy data selecting code...
   data.set <- c("spain", "belgium","italy", "scotland", "denmark", "sweden", "switzerland", 
-                "portugal", "norway", "netherlands", "germany")[k]
+                "portugal", "netherlands", "england")[k]
   cat(data.set,"\n")
   if (data.set=="spain") { ## starts 13th feb (day zero)
     dat <- data.frame(deaths=ed_ESP,day=1:length(ed_ESP),dow = rep(1:7,100)[1:length(ed_ESP)])
@@ -29,15 +30,12 @@ choose.data <- function(k) {
   } else if (data.set == "portugal"){ # 16th Mar
     deaths <- c(rep(0, 41), ed_POR)
     dat <- data.frame(deaths = ed_POR, day=1:length(ed_POR),dow = rep(1:7,100)[1:length(ed_POR)])
-  } else if (data.set == "norway"){ # 12th Mar
-    deaths <- c(rep(0, 37), ed_NOR)
-    dat <- data.frame(deaths = ed_NOR, day=1:length(ed_NOR),dow = rep(1:7,100)[1:length(ed_NOR)])
   } else if (data.set == "netherlands") { # 27th Feb
     deaths <- c(rep(0, 23), ed_NLD)
     dat <- data.frame(deaths = ed_NLD, day=1:length(ed_NLD),dow = rep(1:7,100)[1:length(ed_NLD)])
-  } else {
-    deaths <- c(rep(0, 20), ed_ITA)
-    dat <- data.frame(deaths = ed_ITA, day=1:length(ed_ITA),dow = rep(1:7,100)[1:length(ed_ITA)])
+  } else { # England, starts 2nd March
+    deaths <- c(rep(0, 27), ed_ENG)
+    dat <- data.frame(deaths = ed_ENG, day=1:length(ed_ENG),dow = rep(1:7,100)[1:length(ed_ENG)])
   }
   list(deaths=deaths,dat=dat)
 }
@@ -46,8 +44,33 @@ choose.data <- function(k) {
 
 ## England
 
-## Scotland
+dum <- choose.data(10) ## England
+deaths <- dum$deaths; dat <- dum$dat; rm(dum)
+nc <- length(deaths);day <- 1:nc-21
+dow <- rep(1:7,100)[1:nc] ## day of week
+ks <- 120; bs <- "ad"
+beng <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat,
+             knots=list(dow=c(0,7)))
+theta <- beng$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
+nmcmc <- 1000
+resl_eng <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+                      full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
 
+day <- 1:nc+34 # re-scale day to plot from 31st december, all death vectors start from 4th Feb
+par(mfrow=c(2,1),mar=c(5,5,2,1))
+c1 <- 1.1;c0=.8
+plot.ip(resl_eng,approx=F,last.day=430, lock.down = NA,ylab="England Fatal Infections", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
+month.axis(start=26,stop=430, origin = 0 ,cex=c0)
+abline(v=lock_eng,col=2);
+points(day,deaths,cex=.5,col="grey")
+plotR(resl_eng,last.day=430, ylim=c(-2,2),cex=c1)
+month.axis(start=26,stop=425, origin = 0,cex=c0)
+abline(v=lock_eng,col=2)
+
+
+
+
+## Scotland
 
 
 dum <- choose.data(4) ## Scotland
@@ -82,9 +105,9 @@ deaths <- dum$deaths; dat <- dum$dat; rm(dum)
 nc <- length(deaths);day <- 1:nc-21
 dow <- rep(1:7,100)[1:nc] ## day of week
 ks <- 120; bs <- "ad"
-d_bel <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat,
+bbel <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat,
             knots=list(dow=c(0,7)))
-theta <- d_bel$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
+theta <- bbel$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
 nmcmc <- 1000
 resl_bel <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
                      full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
@@ -168,7 +191,7 @@ dum <- choose.data(5) ## Denmark
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
 nc <- length(deaths);day <- 1:nc-21
 dow <- rep(1:7,100)[1:nc] ## day of week
-ks <- 120; bs <- "ad"
+ks <- 50; bs <- "ad"
 bdnk <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat,
              knots=list(dow=c(0,7)))
 theta <- bdnk$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
@@ -277,46 +300,10 @@ abline(v=lock_por,col=2)
 
 
 
-## Norway - Negative values
-
-dum <- choose.data(4) ## Scotland
-deaths <- dum$deaths; dat <- dum$dat; rm(dum)
-nc <- length(deaths);day <- 1:nc-21
-dow <- rep(1:7,100)[1:nc] ## day of week
-ks <- 120; bs <- "ad"
-bscot <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat,
-             knots=list(dow=c(0,7)))
-theta <- bscot$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
-nmcmc <- 1000
-resl_scot <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
-                      full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
-
-par(mfrow=c(2,1),mar=c(5,5,2,1))
-c1 <- 1.1;c0=.9
-plot.ip(resl_bel,approx=F,last.day=503, lock.down = NA,ylab="Belgium fatal infections", xlab = "Days since 13th February",c1=c1,plot.peak=FALSE)
-month.axis(start=26,stop=547,cex=c0)
-abline(v=lock_bel,col=2);
-points(day,deaths,cex=.5,col="grey")
-plotR(resl_bel,last.day=503, ylim=c(-2,2),cex=c1)
-month.axis(start=26,stop=547,cex=c0)
-abline(v=lock_bel,col=2)
-
-day <- 1:nc+34
-par(mfrow=c(2,1),mar=c(5,5,2,1))
-c1 <- 1.1;c0=.8
-plot.ip(resl_ita,approx=F,last.day=558, lock.down = NA,ylab="Italy fatal infections", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
-month.axis(start=26,stop=547, origin = 0 ,cex=c0)
-abline(v=lock_ita,col=2);
-points(day,deaths,cex=.5,col="grey")
-plotR(resl_ita,last.day=558, ylim=c(-2,2),cex=c1)
-month.axis(start=26,stop=547, origin = 0,cex=c0)
-abline(v=lock_ita,col=2)
-
-
 
 ## Netherlands
 
-dum <- choose.data(10) ## Netherlands
+dum <- choose.data(9) ## Netherlands
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
 nc <- length(deaths);day <- 1:nc-21
 dow <- rep(1:7,100)[1:nc] ## day of week
@@ -328,8 +315,6 @@ nmcmc <- 1000
 resl_nld <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
 
-lock_nld <- c(julian(as.Date("2020-03-23"),origin=as.Date("2020-02-13")),
-              julian(as.Date("2020-12-15"),origin=as.Date("2020-02-13")))
 
 
 
@@ -343,4 +328,3 @@ points(day,deaths,cex=.5,col="grey")
 plotR(resl_nld,last.day=558, ylim=c(-2,2),cex=c1)
 month.axis(start=26,stop=547, origin = 0,cex=c0)
 abline(v=lock_nld,col=2)
-## Germany

@@ -33,7 +33,7 @@ ed_ENG <-c(1,2,0,2,2,0,4,4,1,9,14,20,22,27,40,46,66,63,105,103,149,159,204,263,3
 
 ## Scotland data
 
-SCOT <- read_csv("Data/Scotland_data.csv")
+SCOT <- read_csv("Data/Scotland_data.csv", show_col_types = FALSE)
   
 ed_SCOT <- as.vector(SCOT$deaths)
 #par(mar=c(5,5,1,1),mfrow=c(1,1))
