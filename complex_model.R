@@ -96,6 +96,13 @@ plotR(resl_scot,last.day=558, ylim=c(-2,2),cex=c1)
 month.axis(start=26,stop=547, origin = 0,cex=c0)
 abline(v=lock_scot,col=2)
 
+sanity.plot(resl_scot,bscot) 
+
+lambda <- resl_scot$lambda ## save smoothing parameters
+resl_scot <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+                      full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda/40) ## redo with less smothing
+sanity.plot(resl_scot,bscot) ## much better!
+
 
 ## Belgium
 
