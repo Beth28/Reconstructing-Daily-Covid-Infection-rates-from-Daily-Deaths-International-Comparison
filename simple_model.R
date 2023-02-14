@@ -38,8 +38,8 @@ b_bel <- simple_model_b(ed_BEL, "2020-03-10", 2)
 
 ## Spain
 
-lock_esp <- c(julian(as.Date("2020-3-14"),origin=as.Date("2019-12-31")),
-              julian(as.Date("2020-10-25"),origin=as.Date("2019-12-31")))
+lock_esp <- c(julian(as.Date("2020-3-14"),origin=as.Date("2019-12-31")))
+             # julian(as.Date("2020-10-25"),origin=as.Date("2019-12-31")))
 
 dat_esp <- simple_model_dat(ed_ESP, "2020-02-13", 4)
 b_esp <- simple_model_b(ed_ESP, "2020-02-13", 4)
@@ -57,8 +57,8 @@ b_ita <- simple_model_b(ed_ITA, "2020-02-24", 1)
 
 ## Denmark
 
-lock_dnk <- c(julian(as.Date("2020-3-18"),origin=as.Date("2019-12-31")),
-              julian(as.Date("2020-11-06"),origin=as.Date("2019-12-31")))
+lock_dnk <- c(julian(as.Date("2020-3-18"),origin=as.Date("2019-12-31")))
+             # julian(as.Date("2020-11-06"),origin=as.Date("2019-12-31")))
 
 dat_dnk <- simple_model_dat(ed_DEN, "2020-03-11", 1)
 b_dnk <- simple_model_b(ed_DEN, "2020-03-11", 1)
@@ -81,8 +81,8 @@ b_swit <- simple_model_b(ed_SWIT, "2020-03-5", 4)
 ## Portugal
 
 lock_por <- c(julian(as.Date("2020-3-18"),origin=as.Date("2019-12-31")),
-              julian(as.Date("2021-1-15"),origin=as.Date("2019-12-31")),
-              julian(as.Date("2021-3-11"),origin=as.Date("2019-12-31")))
+              julian(as.Date("2021-1-15"),origin=as.Date("2019-12-31")))
+              #julian(as.Date("2021-3-11"),origin=as.Date("2019-12-31")))
 
 dat_por <- simple_model_dat(ed_POR, "2020-03-16", 4)
 b_por <- simple_model_b(ed_POR, "2020-03-16", 4)
