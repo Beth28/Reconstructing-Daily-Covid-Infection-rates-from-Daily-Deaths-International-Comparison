@@ -496,7 +496,7 @@ plot.ip <- function(res,mcmc=TRUE,approx=TRUE,last.day=NULL,lock.down=11,
 } ## plot.ip
 
 
-sanity.plot <- function(res,b,ylab="deaths",c1=1,c2=1,Dev=Dev0) {
+sanity.plot <- function(res,b,ylab,c1=1,c2=1,Dev=Dev0) {
   ## Sanity check the posterior mode infection profile.
   ## b is a simple gam death model fit, res is a full infection profile fit 
   d <- Dev(res$beta,res$deaths,res$Xf,res$Xw,res$B,theta=res$theta)
@@ -513,8 +513,8 @@ sanity.plot <- function(res,b,ylab="deaths",c1=1,c2=1,Dev=Dev0) {
   }
   lag <- 21 ## get day zero timing right at 13th March  
   day <- 1:length(res$deaths)-lag
-  lag2 <- 0
-  plot(day+ lag2,death[1,],type="l",ylim=range(res$deaths),col="grey",xlab="day",ylab=ylab,cex.lab=c1,cex.axis=c2)
+  lag2 <- 34
+  plot(day+ lag2,death[1,],type="l",ylim=c(min(res$deaths),max(res$deaths)+20),col="grey",xlab="Days since 31st December",ylab=ylab,cex.lab=c1,cex.axis=c2)
   for (j in 2:n.rep) lines(day+lag2,death[j,],col="grey")
   
   X <- model.matrix(b);X[,((ncol(X)-4):ncol(X))] <- 0    ## UK model matrix, weekly removed
@@ -523,10 +523,10 @@ sanity.plot <- function(res,b,ylab="deaths",c1=1,c2=1,Dev=Dev0) {
   se <- rowSums(Xj*(Xj%*%Vbb))^.5  ## corresponding s.e.
   n <- length(fv)
   ii <- (length(day)-n+1):length(day)
-  lines(day[ii],exp(fv))
-  lines(day[ii],exp(fv+2*se),lty=2)
-  lines(day[ii],exp(fv-2*se),lty=2)
-  points(day,res$deaths,col="blue")
+  lines(day[ii]+lag2,exp(fv))
+  lines(day[ii]+lag2,exp(fv+2*se),lty=2)
+  lines(day[ii]+lag2,exp(fv-2*se),lty=2)
+  points(day+lag2,res$deaths,col="blue")
 } ## sanity.plot
 
 r.plot <- function(res,mcmc=TRUE,last.day=NULL,ylab="r",c1=1) {
