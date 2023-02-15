@@ -514,7 +514,7 @@ sanity.plot <- function(res,b,ylab,c1=1,c2=1,Dev=Dev0) {
   lag <- 21 ## get day zero timing right at 13th March  
   day <- 1:length(res$deaths)-lag
   lag2 <- 34
-  plot(day+ lag2,death[1,],type="l",ylim=c(min(res$deaths),max(res$deaths)+20),col="grey",xlab="Days since 31st December",ylab=ylab,cex.lab=c1,cex.axis=c2)
+  plot(day+ lag2,death[1,],type="l",ylim=c(min(res$deaths),max(res$deaths)+25),col="grey",xlab="Days since 31st December",ylab=ylab,cex.lab=c1,cex.axis=c2)
   for (j in 2:n.rep) lines(day+lag2,death[j,],col="grey")
   
   X <- model.matrix(b);X[,((ncol(X)-4):ncol(X))] <- 0    ## UK model matrix, weekly removed

@@ -114,7 +114,7 @@ resl_scot <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d
                      full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
 lambda_scot <- resl_scot$lambda
 resl_scot1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
-                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_scot/20)
+                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_scot/40)
 
 
 day <- 1:nc+34
