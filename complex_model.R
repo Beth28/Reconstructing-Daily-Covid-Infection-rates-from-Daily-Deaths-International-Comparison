@@ -414,7 +414,7 @@ sanity.plot(resl_nld1,bnld, ylab = 'Netherlands Fatal Infections')
 
 ### Plotting in sets of 3 ###
 
-par(mfrow=c(3,1),mar=c(4,5,2,1))
+par(mfrow=c(3,1),mar=c(5,5,3,3))
 
 dum <- choose.data(8) ## Portugal
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
@@ -448,7 +448,7 @@ points(day,deaths,cex=.5,col="grey")
 
 ####
 
-par(mfrow=c(3,1),mar=c(4,5,2,1))
+par(mfrow=c(3,1),mar=c(5,5,3,3))
 
 dum <- choose.data(8) ## Portugal
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
@@ -480,7 +480,7 @@ abline(v=lock_swit,col=2)
 
 ###
 
-par(mfrow=c(3,1),mar=c(4,5,2,1))
+par(mfrow=c(3,1),mar=c(5,5,3,3))
 
 dum <- choose.data(2) ## Belgium
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
@@ -517,7 +517,7 @@ points(day,deaths,cex=.5,col="grey")
 
 ###
 
-par(mfrow=c(3,1),mar=c(4,5,2,1))
+par(mfrow=c(3,1),mar=c(5,5,3,3))
 
 dum <- choose.data(2) ## Belgium
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
@@ -548,7 +548,7 @@ month.axis(start=26,stop=547, origin = 0,cex=c0)
 abline(v=lock_esp,col=2)
 
 ####
-par(mfrow=c(3,1),mar=c(4,5,2,1))
+par(mfrow=c(3,1),mar=c(5,5,3,3))
 
 dum <- choose.data(5) ## Denmark
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
@@ -582,7 +582,7 @@ month.axis(start=26,stop=547, origin = 0 ,cex=c0)
 points(day,deaths,cex=.5,col="grey")
 
 ###
-par(mfrow=c(3,1),mar=c(4,5,2,1))
+par(mfrow=c(3,1),mar=c(5,5,3,3))
 
 dum <- choose.data(5) ## Denmark
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
