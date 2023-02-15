@@ -56,9 +56,6 @@ lambda_eng <- resl_eng$lambda
 resl_eng1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
                      full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_eng/40)
 
-## England
-
-
 
 day <- 1:nc+34 # re-scale day to plot from 31st december, all death vectors start from 4th Feb
 par(mfrow=c(2,1),mar=c(4,5,2,1))
@@ -72,16 +69,18 @@ month.axis(start=26,stop=425, origin = 0,cex=c0)
 abline(v=lock_eng,col=2)
 
 
+par(mfrow=c(1,1),mar=c(4,5,2,1))
+sanity.plot(resl_eng1,beng, ylab = 'England Fatal Infections') 
+
+## Plot all of england together
+
+par(mfrow = c(3,1), mar = c(4,5,2,1))
 dum <- choose.data(10) ## England
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
 nc <- length(deaths);day <- 1:nc-21
 dow <- rep(1:7,100)[1:nc] ## day of week
 ks <- 120; bs <- "ad"
 
-par(mfrow=c(1,1),mar=c(4,5,2,1))
-sanity.plot(resl_eng1,beng, ylab = 'England Fatal Infections') 
-
-par(mfrow = c(3,1), mar = c(4,5,2,1))
 plot(b_eng,rug=FALSE,scheme=1,n=500,ylim=c(0,1800),ylab="England Daily infections/Deaths",
      xlab="Days since 31 Dec 2019",select=1,cex.lab=0.8);
 abline(v=lock_eng);abline(0,0,lty=2)
@@ -272,8 +271,7 @@ month.axis(start=26,stop=547, origin = 0,cex=c0)
 abline(v=lock_dnk,col=2)
 
 par(mfrow=c(1,1),mar=c(4,5,2,1))
-sanity.plot(resl_dnk1,bdnk, ylab = 'Denmark Fatal Infections') 
-
+sanity.plot(resl_dnk1,bdnk, ylab = 'Denmark Fatal Infections')
 
 
 
@@ -548,3 +546,66 @@ c1 <- 1.1;c0=.8
 plotR(resl_esp1,last.day=558, ylim=c(-2,2),cex=c1, ylab = 'Spain log(R)')
 month.axis(start=26,stop=547, origin = 0,cex=c0)
 abline(v=lock_esp,col=2)
+
+####
+par(mfrow=c(3,1),mar=c(4,5,2,1))
+
+dum <- choose.data(5) ## Denmark
+deaths <- dum$deaths; dat <- dum$dat; rm(dum)
+nc <- length(deaths);day <- 1:nc-21
+day <- 1:nc+34
+c1 <- 1.1;c0=.8
+plot.ip(resl_dnk1,approx=F,last.day=558, lock.down = NA,ylab="Denmark Fatal Infections", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
+month.axis(start=26,stop=547, origin = 0 ,cex=c0)
+abline(v=lock_dnk,col=2);
+points(day,deaths,cex=.5,col="grey")
+
+
+dum <- choose.data(9) ## Netherlands
+deaths <- dum$deaths; dat <- dum$dat; rm(dum)
+nc <- length(deaths);day <- 1:nc-21
+day <- 1:nc+34
+c1 <- 1.1;c0=.8
+plot.ip(resl_nld1,approx=F,last.day=558, lock.down = NA,ylab="Netherlands Fatal Infections", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
+month.axis(start=26,stop=547, origin = 0 ,cex=c0)
+abline(v=lock_nld,col=2);
+points(day,deaths,cex=.5,col="grey")
+
+
+dum <- choose.data(6) ## Sweden
+deaths <- dum$deaths; dat <- dum$dat; rm(dum)
+nc <- length(deaths);day <- 1:nc-21
+day <- 1:nc+34
+c1 <- 1.1;c0=.8
+plot.ip(resl_swed1,approx=F,last.day=558, lock.down = NA,ylab="Sweden Fatal Infections", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
+month.axis(start=26,stop=547, origin = 0 ,cex=c0)
+points(day,deaths,cex=.5,col="grey")
+
+###
+par(mfrow=c(3,1),mar=c(4,5,2,1))
+
+dum <- choose.data(5) ## Denmark
+deaths <- dum$deaths; dat <- dum$dat; rm(dum)
+nc <- length(deaths);day <- 1:nc-21
+day <- 1:nc+34
+c1 <- 1.1;c0=.8
+plotR(resl_dnk1,last.day=558, ylim=c(-2,2),cex=c1, ylab = 'Denmark log(R)')
+month.axis(start=26,stop=547, origin = 0,cex=c0)
+abline(v=lock_dnk,col=2)
+
+dum <- choose.data(9) ## Netherlands
+deaths <- dum$deaths; dat <- dum$dat; rm(dum)
+nc <- length(deaths);day <- 1:nc-21
+day <- 1:nc+34
+c1 <- 1.1;c0=.8
+plotR(resl_nld1,last.day=558, ylim=c(-2,2),cex=c1, ylab = 'Netherlands log(R)')
+month.axis(start=26,stop=547, origin = 0,cex=c0)
+abline(v=lock_nld,col=2)
+
+dum <- choose.data(6) ## Sweden
+deaths <- dum$deaths; dat <- dum$dat; rm(dum)
+nc <- length(deaths);day <- 1:nc-21
+day <- 1:nc+34
+c1 <- 1.1;c0=.8
+plotR(resl_swed1,last.day=558, ylim=c(-2,2),cex=c1, ylab = 'Sweden log(R)')
+month.axis(start=26,stop=547, origin = 0,cex=c0)
