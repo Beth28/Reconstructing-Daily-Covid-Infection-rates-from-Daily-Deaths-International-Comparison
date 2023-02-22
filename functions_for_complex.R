@@ -296,6 +296,24 @@ fit1 <- function(beta,sp,y,Xf,Xw,B,S,theta=30,tol=1e-7,Dev=Dev0) {
   list(beta=beta,Vb=Vb,step.fail=step.fail)
 } ## fit1
 
+dconv <- function(p0,p1) {
+  ## convolve discrete distributions p0 and p1 on [0,1,2,...]
+  n0 <- length(p0)
+  n1 <- length(p1)
+  p <- p0*0 ## output array
+  ind <- ii <- 1:n1
+  for (i in 1:n0) { ## convolution loop
+    p[ii] <- p[ii] + p0[i]*p1[ind]
+    ii <- ii+1 ## move p index on 1 place
+    x <- ii<=n0 ## don't go beyond array end
+    ii <- ii[x] 
+    ind <- ind[x]
+  }
+  p[p==0] <- .Machine$double.eps
+  p/sum(p) ## return standardized
+} ## dconv
+
+
 
 full.fit <- function(deaths,day,dow,theta,dilation=0,mcmc=TRUE,ei2d=3.19,si2d=.44,
                      renew=FALSE,full.mcmc = FALSE,ks=20,bs="tp",lambda=NULL) {
@@ -339,12 +357,20 @@ full.fit <- function(deaths,day,dow,theta,dilation=0,mcmc=TRUE,ei2d=3.19,si2d=.4
   nc <- length(deaths)
   ## Set up matrix mapping infections to future deaths based on published
   ## incubation and disease duration distributions...
-  d <- dlnorm(1:nc,ei2d,si2d)
+  if (is.null(ei2d)) {
+    ## convolve ISARIC onset to death with McAloon infection to onset dist...
+    ## pd[1] is prob of duration 0, pd[2] of diration 1, etc 
+    d <- dconv(dlnorm(0:nc,2.840799,0.5719524),dlnorm(0:40,1.63,.5))
+  } else {
+    d <- dlnorm(0:nc,ei2d,si2d)
+    d[d==0] <- .Machine$double.eps
+  }  
   B <- matrix(0,nc,nc)
   for (i in 1:nc) { ## map case rate day i-1 to death rate day i ...
-    B[,i] <- c(rep(0,i-1),d[1:(nc-i+1)])
+    #B[,i] <- c(rep(0,i-1),d[2:(nc-i+1)])
+    B[,i] <- if (i) c(rep(0,i-1),d[1:(nc-i+1)])
   }
-  
+  pd <- d[-1]
   ## Empirical Bayes model estimation. NB theta as supplied, smoothing parameters to
   ## maximize approximate Laplace approximate Marginal Likelihood by Extended
   ## Fellner Schall algorithm (Wood and Fasiolo (2017) Biometrics)... 
@@ -505,11 +531,14 @@ sanity.plot <- function(res,b,ylab,c1=1,c2=1,Dev=Dev0) {
   n.rep <- 100
   death <- matrix(0,n.rep,n)
   for (j in 1:n.rep) for (i in 1:n) {
-    t <- round(rlnorm(fi[i],res$ei2d,res$si2d))
-    t <- t[i+t-1<=n] ## discard deaths beyond end of data
-    dd <- tabulate(t)
-    ii <- 1:length(dd)+i-1 
-    death[j,ii] <- death[j,ii] + dd
+    t <- if (is.null(res$ei2d)) sample(1:length(res$d),fi[i],replace=TRUE,prob=res$d) else
+      round(rlnorm(fi[i],res$ei2d,res$si2d)) ## sample durations
+    t <- t[i+t<=n] ## discard deaths beyond end of data
+    if (length(t)>0) {
+      dd <- tabulate(t) ## count up durations, starting at 1
+      ii <- 1:length(dd)+i # -1 
+      death[j,ii] <- death[j,ii] + dd
+    }  
   }
   lag <- 21 ## get day zero timing right at 13th March  
   day <- 1:length(res$deaths)-lag
