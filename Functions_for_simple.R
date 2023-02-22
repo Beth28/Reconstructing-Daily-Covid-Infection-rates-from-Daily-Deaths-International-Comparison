@@ -36,7 +36,29 @@ simple_model_b <- function(ed, date, weekday) {
   ## params of ISARIC based infection to death distribution 
   ## lognorm -  mean = exp(mu + sig2/2); var = (exp(sig2)-1)mean^2
   ##            sig2 = log(v/m^2+1); mu = log(m) - sig2/2
-  sig <- log(12^2/27.7^2+1)^.5; mu <- log(27.7) - sig^2/2 
+  sig <- log(12^2/27.7^2+1)^.5; mu <- log(27.7) - sig^2/2
+  
+  dconv <- function(p0,p1) {
+    ## convolve discrete distributions p0 and p1 on [0,1,2,...]
+    n0 <- length(p0)
+    n1 <- length(p1)
+    p <- p0*0 ## output array
+    ind <- ii <- 1:n1
+    for (i in 1:n0) { ## convolution loop
+      p[ii] <- p[ii] + p0[i]*p1[ind]
+      ii <- ii+1 ## move p index on 1 place
+      x <- ii<=n0 ## don't go beyond array end
+      ii <- ii[x] 
+      ind <- ind[x]
+    }
+    p[p==0] <- .Machine$double.eps
+    p/sum(p) ## return standardized
+  } ## dconv
+  
+  ## convolve ISARIC onset to death with McAloon infection to onset dist...
+  ## pd[1] is prob of duration 0, pd[2] of diration 1, etc 
+  pd <- dconv(dlnorm(0:100,2.840799,0.5719524),dlnorm(0:40,1.63,.5))
+  
   
   ## first estimate Poisson model to get weights for linear scale regression
   ## death_i = sum_j s(day_i-lag_j) dln(lag_j)
