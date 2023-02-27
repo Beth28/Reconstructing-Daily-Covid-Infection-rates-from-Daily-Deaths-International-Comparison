@@ -531,8 +531,8 @@ sanity.plot <- function(res,b,ylab,c1=1,c2=1,Dev=Dev0) {
   n.rep <- 100
   death <- matrix(0,n.rep,n)
   for (j in 1:n.rep) for (i in 1:n) {
-    t <- if (is.null(res$ei2d)) sample(1:length(res$d),fi[i],replace=TRUE,prob=res$d) else
-      round(rlnorm(fi[i],res$ei2d,res$si2d)) ## sample durations
+    t <- if (is.null(res$ei2d)) {sample(1:length(res$d),fi[i],replace=TRUE,prob=res$d)} else
+      {round(rlnorm(fi[i],res$ei2d,res$si2d))} ## sample durations
     t <- t[i+t<=n] ## discard deaths beyond end of data
     if (length(t)>0) {
       dd <- tabulate(t) ## count up durations, starting at 1

@@ -50,10 +50,10 @@ beng <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat,
              knots=list(dow=c(0,7)))
 theta <- beng$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
 nmcmc <- 1000
-resl_eng <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_eng <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
 lambda_eng <- resl_eng$lambda
-resl_eng1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_eng1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                      full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_eng/40)
 
 
@@ -110,10 +110,10 @@ bscot <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat
             knots=list(dow=c(0,7)))
 theta <- bscot$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
 nmcmc <- 1000
-resl_scot <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_scot <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                      full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
 lambda_scot <- resl_scot$lambda
-resl_scot1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_scot1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                        full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_scot/40)
 
 
@@ -249,10 +249,10 @@ bdnk <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat,
              knots=list(dow=c(0,7)))
 theta <- bdnk$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
 nmcmc <- 1000
-resl_dnk <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_dnk <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
 lambda_dnk <- resl_dnk$lambda
-resl_dnk1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_dnk1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                      full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_dnk/40)
 
 
@@ -286,10 +286,10 @@ bswed <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat
              knots=list(dow=c(0,7)))
 theta <- bswed$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
 nmcmc <- 1000
-resl_swed <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_swed <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
 lambda_swed <- resl_swed$lambda
-resl_swed1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_swed1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_swed/40)
 
 
@@ -304,7 +304,9 @@ month.axis(start=26,stop=547, origin = 0,cex=c0)
 
 
 par(mfrow=c(1,1),mar=c(4,5,2,1))
+
 sanity.plot(resl_swed1,bswed, ylab = 'Sweden Fatal Infections') 
+points(day,deaths,cex=.5,col="grey")
 
 
 
