@@ -67,7 +67,8 @@ simple_model_b <- function(ed, date, weekday) {
   ## Now set up to fit model as in ?linear.functional.terms 
   Dp <- 80 ## how many lags 
   lag <- 1:Dp-1 ## the daily lags
-  dln <- dlnorm(lag,mu,sig) ## evaluate inf to death dist
+  #dln <- dlnorm(lag,mu,sig) ## evaluate inf to death dist ISARIC log normal
+  dln <- pd[1:Dp] ## ISARIC convolution version
   #plot(lag,dln) ## visualize it
   Tag <- matrix(rep(dat$tag,Dp)-rep(lag,each=n),n,Dp) ## The lagged day matrix
   W <- matrix(dln,n,Dp,byrow=TRUE)  ## The weighting matrix probability of this duration

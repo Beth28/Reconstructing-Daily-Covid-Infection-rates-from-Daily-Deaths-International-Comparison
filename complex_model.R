@@ -388,10 +388,10 @@ bnld <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat,
              knots=list(dow=c(0,7)))
 theta <- bnld$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
 nmcmc <- 1000
-resl_nld <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_nld <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
 lambda_nld <- resl_nld$lambda
-resl_nld1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_nld1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_nld/40)
 
 
@@ -409,7 +409,7 @@ month.axis(start=26,stop=547, origin = 0,cex=c0)
 abline(v=lock_nld,col=2)
 
 par(mfrow=c(1,1),mar=c(4,5,2,1))
-sanity.plot(resl_nld1,bnld, ylab = 'Netherlands Fatal Infections') 
+sanity.plot(resl_nld,bnld, ylab = 'Netherlands Fatal Infections') 
 
 
 ### Plotting in sets of 3 ###
