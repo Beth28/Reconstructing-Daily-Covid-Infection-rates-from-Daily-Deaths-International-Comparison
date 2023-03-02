@@ -144,10 +144,10 @@ bbel <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat,
             knots=list(dow=c(0,7)))
 theta <- bbel$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
 nmcmc <- 1000
-resl_bel <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_bel <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                      full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
 lambda_bel <- resl_bel$lambda
-resl_bel1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_bel1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                        full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_bel/40)
 
 
@@ -179,10 +179,10 @@ bita <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat,
              knots=list(dow=c(0,7)))
 theta <- bita$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
 nmcmc <- 1000
-resl_ita <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_ita <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
 lambda_ita <- resl_ita$lambda
-resl_ita1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_ita1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_ita/40)
 
 
@@ -214,10 +214,10 @@ besp <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat,
              knots=list(dow=c(0,7)))
 theta <- besp$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
 nmcmc <- 1000
-resl_esp <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_esp <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
 lambda_esp <- resl_esp$lambda
-resl_esp1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_esp1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_esp/40)
 
 
@@ -321,10 +321,10 @@ bswit <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat
              knots=list(dow=c(0,7)))
 theta <- bswit$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
 nmcmc <- 1000
-resl_swit <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_swit <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
 lambda_swit <- resl_swit$lambda
-resl_swit1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_swit1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                        full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_swit/20)
 
 
@@ -354,10 +354,10 @@ bpor <- gam(deaths~s(day,k = ks, bs=bs)+s(dow,k=7,bs="cc"),family=nb(),data=dat,
              knots=list(dow=c(0,7)))
 theta <- bpor$family$getTheta(TRUE)  ## Use this negative binomial theta for full model
 nmcmc <- 1000
-resl_por <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_por <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = NULL)
 lambda_por <- resl_por$lambda
-resl_por1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=3.235,si2d=.415,
+resl_por1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                       full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_por/40)
 
 
