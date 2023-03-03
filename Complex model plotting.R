@@ -162,7 +162,7 @@ abline(v=lock_nld,col=2)
 
 ### Portugal ###
 
-par(mfrow=c(3,1),mar=c(5,5,4.15,3))
+par(mfrow=c(3,1),mar=c(5,5,3,3))
 
 
 plot(b_por,rug=FALSE,scheme=1,n=500,xlim = c(35, 558),ylim=c(0,500),ylab="Simple model infection trajectory",
@@ -171,8 +171,6 @@ abline(v=lock_por, col=2);abline(0,0,lty=2)
 with(dat_por,points(tag,tote,pch=19,col=1,cex=.5))
 lines(dat_por$tag,fitted(b_por),col="grey",lwd=2)
 month.axis(start=31,stop=547,origin = 0, cex=0.8)
-port_title <- expression(bolditalic(Portugal))
-title(main = port_title)
 
 dum <- choose.data(8) ## Portugal
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
@@ -182,7 +180,9 @@ c1 <- 1.1;c0=.8
 plot.ip(resl_por1,approx=F,last.day=558, lock.down = NA,ylab="Complex model infection trajectory", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
 month.axis(start=26,stop=547, origin = 0 ,cex=c0)
 abline(v=lock_por,col=2);
-points(day,deaths,cex=.5,col="grey")
+points(day,deaths,cex=.5,col=1, pch=19)
+lines(dat_por$tag,fitted(bpor),col="grey",lwd=2)
+
 
 dum <- choose.data(8) ## Portugal
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
@@ -256,14 +256,13 @@ abline(v=lock_swit,col=2)
 
 
 ### Belgium ###
-par(mfrow=c(3,1),mar=c(5,5,4.15,3))
+par(mfrow=c(3,1),mar=c(5,5,3,3))
 plot(b_bel,rug=FALSE,scheme=1,n=500,xlim = c(35, 558),ylim=c(0,600),ylab="Simple model infection trajectory", xlab = "Days since 31st December",select=1,cex.lab=1.2);
 abline(v=lock_bel, col=2);abline(0,0,lty=2)
 with(dat_bel,points(tag,tote,pch=19,col=1,cex=.5))
 lines(dat_bel$tag,fitted(b_bel),col="grey",lwd=2)
 month.axis(start=31,stop=547,origin = 0, cex=0.8)
-bel_title <- expression(bolditalic(Belgium))
-title(main = bel_title)
+
 
 dum <- choose.data(2) ## Belgium
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
@@ -273,7 +272,9 @@ c1 <- 1.1;c0=.8
 plot.ip(resl_bel1,approx=F,last.day=558, lock.down = NA,ylab="Complex model infection trajectory", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
 month.axis(start=26,stop=547, origin = 0 ,cex=c0)
 abline(v=lock_bel,col=2);
-points(day,deaths,cex=.5,col="grey")
+points(day,deaths,cex=.5,col=1,pch=19)
+lines(dat_bel$tag,fitted(bbel),col="grey",lwd=2)
+
 
 dum <- choose.data(2) ## Belgium
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
@@ -285,15 +286,13 @@ month.axis(start=26,stop=547, origin = 0,cex=c0)
 abline(v=lock_bel,col=2)
 
 ### Italy ###
-par(mfrow=c(3,1),mar=c(5,5,4.15,3))
+par(mfrow=c(3,1),mar=c(5,5,3,3))
 plot(b_ita,rug=FALSE,scheme=1,n=500,xlim = c(35, 558),ylim=c(0,1800),ylab="Simple model infection trajectory",
      xlab="Days since 31st December",select=1,cex.lab=1.2);
 abline(v=lock_ita, col=2);abline(0,0,lty=2)
 with(dat_ita,points(tag,tote,pch=19,col=1,cex=.5))
 lines(dat_ita$tag,fitted(b_ita),col="grey",lwd=2)
 month.axis(start=31,stop=547,origin = 0, cex=0.8)
-ita_title <- expression(bolditalic(Italy))
-title(main = ita_title)
 
 dum <- choose.data(3) ## Italy
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
@@ -303,7 +302,9 @@ c1 <- 1.1;c0=.8
 plot.ip(resl_ita1,approx=F,last.day=558, lock.down = NA,ylab="Complex model infection trajectory", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
 month.axis(start=26,stop=547, origin = 0 ,cex=c0)
 abline(v=lock_ita,col=2);
-points(day,deaths,cex=.5,col="grey")
+points(day,deaths,cex=.5,col=1,pch = 19)
+lines(dat_ita$tag,fitted(bita),col="grey",lwd=2)
+
 
 dum <- choose.data(3) ## Italy
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
@@ -315,15 +316,13 @@ month.axis(start=26,stop=547, origin = 0,cex=c0)
 abline(v=lock_ita,col=2)
 
 ### Spain ###
-par(mfrow=c(3,1),mar=c(5,5,4.15,3))
+par(mfrow=c(3,1),mar=c(5,5,3,3))
 plot(b_esp,rug=FALSE,scheme=1,n=500,xlim = c(35, 558),ylim=c(0,2100),ylab="Simple model infection trajectory",
      xlab="Days since 31st December",select=1,cex.lab=1.2);
 abline(v=lock_esp,col=2);abline(0,0,lty=2)
 with(dat_esp,points(tag,tote,pch=19,col=1,cex=.5))
 lines(dat_esp$tag,fitted(b_esp),col="grey",lwd=2)
 month.axis(start=31,stop=547,origin = 0, cex=0.8)
-esp_title <- expression(bolditalic(Spain))
-title(main = esp_title)
 
 dum <- choose.data(1) ## Spain
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
@@ -333,7 +332,9 @@ c1 <- 1.1;c0=.8
 plot.ip(resl_esp1,approx=F,last.day=558, lock.down = NA,ylab="Complex model infection trajectory", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
 month.axis(start=26,stop=547, origin = 0 ,cex=c0)
 abline(v=lock_esp,col=2);
-points(day,deaths,cex=.5,col="grey")
+points(day,deaths,cex=.5,col=1, pch=19)
+lines(dat_esp$tag,fitted(besp),col="grey",lwd=2)
+
 
 dum <- choose.data(1) ## Spain
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
