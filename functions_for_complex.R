@@ -313,8 +313,6 @@ dconv <- function(p0,p1) {
   p/sum(p) ## return standardized
 } ## dconv
 
-
-
 full.fit <- function(deaths,day,dow,theta,dilation=0,mcmc=TRUE,ei2d=3.19,si2d=.44,
                      renew=FALSE,full.mcmc = FALSE,ks=20,bs="tp",lambda=NULL) {
   ## fit model - dilation 0 for none, 4 for as paper.
@@ -418,7 +416,7 @@ full.fit <- function(deaths,day,dow,theta,dilation=0,mcmc=TRUE,ei2d=3.19,si2d=.4
   } ## update loop
   
   ret <- list(Xf=Xf,Xw=Xw,Xg=Xg,S=S,beta=beta,Vb=Vb,B=B,deaths=deaths,theta=theta,
-              ei2d=ei2d,si2d=si2d,lambda=lambda)
+              ei2d=ei2d,si2d=si2d,d=pd,lambda=lambda,mu=d$mu)
   
   if (mcmc) { ## Metropolis Hastings simulation to improve posterior inference
     ## total penalty matrix
@@ -522,7 +520,7 @@ plot.ip <- function(res,mcmc=TRUE,approx=TRUE,last.day=NULL,lock.down=11,
 } ## plot.ip
 
 
-sanity.plot <- function(res,b,ylab,c1=1,c2=1,Dev=Dev0) {
+sanity.plot <- function(res,b,ylab="deaths",c1=1,c2=1,Dev=Dev0) {
   ## Sanity check the posterior mode infection profile.
   ## b is a simple gam death model fit, res is a full infection profile fit 
   d <- Dev(res$beta,res$deaths,res$Xf,res$Xw,res$B,theta=res$theta)
@@ -531,8 +529,8 @@ sanity.plot <- function(res,b,ylab,c1=1,c2=1,Dev=Dev0) {
   n.rep <- 100
   death <- matrix(0,n.rep,n)
   for (j in 1:n.rep) for (i in 1:n) {
-    t <- if (is.null(res$ei2d)) {sample(1:length(res$d),fi[i],replace=TRUE,prob=res$d)} else
-      {round(rlnorm(fi[i],res$ei2d,res$si2d))} ## sample durations
+    t <- if (is.null(res$ei2d)) sample(1:length(res$d),fi[i],replace=TRUE,prob=res$d) else
+      round(rlnorm(fi[i],res$ei2d,res$si2d)) ## sample durations
     t <- t[i+t<=n] ## discard deaths beyond end of data
     if (length(t)>0) {
       dd <- tabulate(t) ## count up durations, starting at 1
@@ -542,8 +540,8 @@ sanity.plot <- function(res,b,ylab,c1=1,c2=1,Dev=Dev0) {
   }
   lag <- 21 ## get day zero timing right at 13th March  
   day <- 1:length(res$deaths)-lag
-  lag2 <- 34
-  plot(day+ lag2,death[1,],type="l",ylim=c(min(res$deaths),max(res$deaths)+25),col="grey",xlab="Days since 31st December",ylab=ylab,cex.lab=c1,cex.axis=c2)
+  lag2 <- 0
+  plot(day+ lag2,death[1,],type="l",ylim=range(res$deaths),col="grey",xlab="day",ylab=ylab,cex.lab=c1,cex.axis=c2)
   for (j in 2:n.rep) lines(day+lag2,death[j,],col="grey")
   
   X <- model.matrix(b);X[,((ncol(X)-4):ncol(X))] <- 0    ## UK model matrix, weekly removed
@@ -552,10 +550,10 @@ sanity.plot <- function(res,b,ylab,c1=1,c2=1,Dev=Dev0) {
   se <- rowSums(Xj*(Xj%*%Vbb))^.5  ## corresponding s.e.
   n <- length(fv)
   ii <- (length(day)-n+1):length(day)
-  lines(day[ii]+lag2,exp(fv))
-  lines(day[ii]+lag2,exp(fv+2*se),lty=2)
-  lines(day[ii]+lag2,exp(fv-2*se),lty=2)
-  points(day+lag2,res$deaths,col="blue")
+  lines(day[ii],exp(fv))
+  lines(day[ii],exp(fv+2*se),lty=2)
+  lines(day[ii],exp(fv-2*se),lty=2)
+  points(day,res$deaths,col="blue")
 } ## sanity.plot
 
 r.plot <- function(res,mcmc=TRUE,last.day=NULL,ylab="r",c1=1) {
