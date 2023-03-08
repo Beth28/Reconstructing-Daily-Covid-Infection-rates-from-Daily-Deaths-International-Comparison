@@ -96,6 +96,7 @@ lambda_bel <- resl_bel$lambda
 resl_bel1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=.415,
                        full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_bel/40)
 
+
 ## Denmark ##
 
 dum <- choose.data(5) ## Denmark
