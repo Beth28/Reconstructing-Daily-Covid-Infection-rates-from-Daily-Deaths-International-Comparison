@@ -1,7 +1,7 @@
 testing <- read.csv('Data/England_testing_data.csv', header = TRUE, col.names = c('Date', 'period', 'pos_test', 'LB', 'UB'))
 
 testing <- testing %>%
-  mutate(date_time = julian(as.Date(Date, format = "%d/%m/%Y")-5.8,origin=as.Date("2019-12-31", format = "%Y-%m-%d")))
+  mutate(date_time = julian(as.Date(Date, format = "%d/%m/%Y"),origin=as.Date("2019-12-31", format = "%Y-%m-%d")))
 
 par(mar=c(5,5,1,1),mfrow=c(1,1))
 plot(testing$date_time, testing$pos_test, xlab = "Days since 31/12/2019", ylab = "Number of positive tests")
@@ -36,7 +36,7 @@ arrows(x0 = testing_scot$date_time, y0 = testing_scot$LB, x1 = testing_scot$date
 day <- 1:nc+34
 par(mfrow=c(2,1),mar=c(4,5,2,1))
 c1 <- 1.1;c0=.8
-plot.ip(resl_scot,approx=F,last.day=558, lock.down = NA,ylab="Scotland Fatal Infections", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
+plot.ip(resl_scot1,approx=F,last.day=558, lock.down = NA,ylab="Scotland Fatal Infections", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
 month.axis(start=26,stop=547, origin = 0 ,cex=c0)
 abline(v=lock_scot,col=2);
 points(day,deaths,cex=.5,col="grey")
@@ -227,13 +227,12 @@ abline(v=lock_scot,col=2)
 ### Switzerland ###
 par(mfrow=c(3,1),mar=c(5,5,4.15,3))
 plot(b_swit,rug=FALSE,scheme=1,n=500,xlim = c(35, 558),ylim=c(0,175),ylab="Simple model infection trajectory",
-     xlab="Days since 31st December",select=1,cex.lab=1.2);
+     xlab="Days since 31st December",select=1,cex.lab=1.1);
 abline(v=lock_swit, col=2);abline(0,0,lty=2)
 with(dat_swit,points(tag,tote,pch=19,col=1,cex=.5))
 lines(dat_swit$tag,fitted(b_swit),col="grey",lwd=2)
 month.axis(start=31,stop=547,origin = 0, cex=0.8)
-swit_title <- expression(bolditalic(Switzerland))
-title(main = swit_title)
+
 
 dum <- choose.data(7) ## Switzerland
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)
@@ -243,7 +242,8 @@ c1 <- 1.1;c0=.8
 plot.ip(resl_swit1,approx=F,last.day=558, lock.down = NA,ylab="Complex model infection trajectory", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
 month.axis(start=26,stop=547, origin = 0 ,cex=c0)
 abline(v=lock_swit,col=2);
-points(day,deaths,cex=.5,col="grey")
+points(day,deaths,cex=.5,col=1, pch = 19)
+lines(dat_swit$tag,fitted(bswit),col="grey",lwd=2)
 
 dum <- choose.data(7) ## Switzerland
 deaths <- dum$deaths; dat <- dum$dat; rm(dum)

@@ -72,6 +72,22 @@ abline(v=lock_eng,col=2)
 par(mfrow=c(1,1),mar=c(4,5,2,1))
 sanity.plot(resl_eng1,beng, ylab = 'England Fatal Infections') 
 
+
+# england sanity plot testing
+
+d <- Dev0(resl_eng1$beta,resl_eng1$deaths,resl_eng1$Xf,resl_eng1$Xw,resl_eng1$B,theta=resl_eng1$theta)
+fi <- round(d$f)
+n <- length(fi)
+n.rep <- 100
+death <- matrix(0,n.rep,n)
+for(i in 1:n){
+  t_1 <- sample(1:length(resl_eng1$d),fi[i],replace=TRUE,prob=resl_eng1$d)
+  t_2 <- round(rlnorm(fi[i],3.235,.415))}
+
+for (j in 1:n.rep) for (i in 1:n) {
+  t <- if (is.null(resl_eng1$ei2d)) {sample(1:length(res$d),fi[i],replace=TRUE,prob=res$d)} else
+  {round(rlnorm(fi[i],res$ei2d,res$si2d))} } ## sample durations
+
 ## Plot all of england together
 
 par(mfrow = c(3,1), mar = c(4,5,2,1))
