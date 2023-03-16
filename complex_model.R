@@ -58,7 +58,6 @@ resl_eng1 <- full.fit(deaths,day,dow,theta,dilation=0,mcmc=nmcmc,ei2d=NULL,si2d=
                      full.mcmc=TRUE, ks=ks, bs=bs, lambda = lambda_eng/40)
 
 
-
 ## Scotland ##
 
 

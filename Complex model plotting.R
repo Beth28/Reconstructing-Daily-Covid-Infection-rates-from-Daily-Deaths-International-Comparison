@@ -4,12 +4,12 @@
 
 ### England ###
 par(mfrow=c(3,1),mar=c(5,5,3,3))
-plot(b_eng,rug=FALSE,scheme=1,n=500,xlim = c(35,430),ylim=c(0,1800),ylab="Simple model infection trajectory",
-     xlab="Days since 31st December",select=1,cex.lab=0.8);
+plot(b_eng,rug=FALSE,scheme=1,n=500,xlim = c(35,558),ylim=c(0,2000),ylab="Simple model infection trajectory",
+     xlab="Days since 31st December",select=1,cex.lab=1.1);
 abline(v=lock_eng, col=2);abline(0,0,lty=2)
 with(dat_eng,points(tag,tote,pch=19,col=1,cex=.5))
 lines(dat_eng$tag,fitted(b_eng),col="grey",lwd=2)
-month.axis(start=31,stop=420,origin = 0, cex=0.8)
+month.axis(start=31,stop=547,origin = 0, cex=0.8)
 
 
 dum <- choose.data(10) ## England
@@ -17,8 +17,8 @@ deaths <- dum$deaths; dat <- dum$dat; rm(dum)
 nc <- length(deaths);day <- 1:nc-21
 day <- 1:nc+34 
 c1 <- 1.1;c0=.8
-plot.ip(resl_eng1,approx=F,last.day=430, lock.down = NA,ylab="Complex model infection trajectory", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
-month.axis(start=26,stop=430, origin = 0 ,cex=c0)
+plot.ip(resl_eng1,approx=F,last.day=558, lock.down = NA,ylab="Complex model infection trajectory", xlab = "Days since 31st December",c1=c1,plot.peak=FALSE)
+month.axis(start=26,stop=547, origin = 0 ,cex=c0)
 abline(v=lock_eng,col=2);
 points(day,deaths,cex=.5,col=1,pch=19)
 lines(dat_eng$tag,fitted(beng),col="grey",lwd=2)
@@ -29,8 +29,8 @@ deaths <- dum$deaths; dat <- dum$dat; rm(dum)
 nc <- length(deaths);day <- 1:nc-21
 day <- 1:nc+34 
 c1 <- 1.1;c0=.8
-plotR(resl_eng1,last.day=430, ylim=c(-2,2),cex=c1, ylab = 'log(R)')
-month.axis(start=26,stop=425, origin = 0,cex=c0)
+plotR(resl_eng1,last.day=558, ylim=c(-2,2),cex=c1, ylab = 'log(R)')
+month.axis(start=26,stop=547, origin = 0,cex=c0)
 abline(v=lock_eng,col=2)
 
 ## England sanity ##
@@ -41,6 +41,9 @@ day <- 1:nc+34
 c1 <- 1.1;c0=.8
 par(mfrow=c(1,1),mar=c(4,5,2,1))
 sanity.plot(resl_eng1,beng, ylab = 'England Fatal Infections')
+
+
+
 
 ### Scotland ###
 par(mfrow=c(3,1),mar=c(5,5,3,3))
