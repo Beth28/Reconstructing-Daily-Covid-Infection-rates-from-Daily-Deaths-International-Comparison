@@ -44,7 +44,7 @@ b_dnk <- simple_model_b(ed_DEN, "2020-03-11", 1)
 ## Italy
 
 lock_ita <- c(julian(as.Date("2020-3-11"),origin=as.Date("2019-12-31")),
-              julian(as.Date("2020-11-06"),origin=as.Date("2019-12-31")))
+              julian(as.Date("2020-12-24"),origin=as.Date("2019-12-31")))
 
 dat_ita <- simple_model_dat(ed_ITA, "2020-02-24", 1)
 b_ita <- simple_model_b(ed_ITA, "2020-02-24", 1)
